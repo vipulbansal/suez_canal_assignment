@@ -1,16 +1,16 @@
 # suez_canal_assignment
 
-A new Flutter project.
+Suez Canal Bank assignment project by Vipul Bansal.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Flutter version used on stable channel: 3.24.2
+Dart version used: 3.5.2
 
-A few resources to get you started if this is your first Flutter project:
+Project Video Link: https://drive.google.com/file/d/1BVGJOtflO9T4MScMffWhpnUKSIBSFJwd/view?usp=sharing
+Project works both in portrait and landscape orientations.
+State Management Used: Bloc
+Architecture pattern followed: Clean Architecture.
+Api calling done using HTTP package.
+Mockito used for writing test cases that includes success and failure test cases for the main bloc states.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
