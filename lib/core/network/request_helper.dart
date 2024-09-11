@@ -125,8 +125,8 @@ class RequestHelper {
     if (response.statusCode == 200) {
       return response;
     } else if (response.statusCode == 400 ||
-        response.statusCode == 401 ||
-        response.statusCode == 421) {
+        response.statusCode == 409 ||
+        response.statusCode == 422) {
       final parsed = json.decode(response.body);
       if (parsed["message"] != null) return parsed["message"];
     }

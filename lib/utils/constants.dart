@@ -1,1 +1,1 @@
-const baseUrl = 'https://api.edamam.com/api/nutrition-details?app_id={app_id}&app_key={app_key}';
+const baseUrl = 'https://api.edamam.com/api/';
