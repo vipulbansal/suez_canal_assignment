@@ -9,10 +9,10 @@ abstract class BlocWithState<E, S> extends Bloc<E, S> {
 
   BlocProcessState get blocProcessState => _state;
 
-  Stream<S> runBlocProcess(Stream<S> Function() process) async* {
+  Future<void> runBlocProcess(Future Function() process) async {
     if (_state == BlocProcessState.idle) {
       _state = BlocProcessState.busy;
-      yield* process();
+      await process();
       _state = BlocProcessState.idle;
     }
   }

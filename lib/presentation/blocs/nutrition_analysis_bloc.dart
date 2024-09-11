@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suez_canal_assignment/core/bloc/bloc_with_state.dart';
 import 'package:suez_canal_assignment/core/params/ingredient_request_params.dart';
 import 'package:suez_canal_assignment/core/resources/data_state.dart';
@@ -15,36 +14,31 @@ part 'nutrition_analysis_state.dart';
 
 class NutritionAnalysisBloc
     extends BlocWithState<NutritionAnalysisEvent, NutritionAnalysisState> {
-  NutritionDetailsUsecase _nutritionDetailsUsecase;
+  final NutritionDetailsUsecase _nutritionDetailsUsecase;
 
-  NutritionAnalysisBloc(
-    this._nutritionDetailsUsecase,
-  ) : super(NutritionAnalysisInitial());
-
-  @override
-  Stream<NutritionAnalysisState> mapEventToState(
-      NutritionAnalysisEvent event) async* {
-    if (event is AnalyzeIngredientsEvent) {
-      yield* _mapAnalyzeIngredientsToState(event.ingredientRequestParams);
-    }
+  NutritionAnalysisBloc(this._nutritionDetailsUsecase)
+      : super(NutritionAnalysisInitial()) {
+    on<AnalyzeIngredientsEvent>(_onAnalyzeIngredients);
   }
 
-  Stream<NutritionAnalysisState> _mapAnalyzeIngredientsToState(
-      IngredientRequestParams ingredientRequestParams) async* {
-    yield* runBlocProcess(() async* {
-      yield NutritionAnalysisLoading();
+  Future<void> _onAnalyzeIngredients(AnalyzeIngredientsEvent event,
+      Emitter<NutritionAnalysisState> emit) async {
+    await runBlocProcess(() async {
+      emit(NutritionAnalysisLoading());
       final dataState = await _nutritionDetailsUsecase(
-        params: ingredientRequestParams,
+        params: event.ingredientRequestParams,
       );
+
       if (dataState is DataSuccess) {
         final DataResponseModel? data = dataState.data;
-        yield (NutritionAnalysisSuccess(nutritionAnalysisData: data!));
-      } else if (dataState is DataFailed) {
-        if (dataState.error != null) {
-          yield NutritionAnalysisFail(message: dataState.error!.message);
+        if (data != null) {
+          emit(NutritionAnalysisSuccess(nutritionAnalysisData: data));
         } else {
-          yield NutritionAnalysisFail(message: "Server Issue");
+          emit(NutritionAnalysisFail(message: "No data found"));
         }
+      } else if (dataState is DataFailed) {
+        emit(NutritionAnalysisFail(
+            message: dataState.error?.message ?? "Server Issue"));
       }
     });
   }

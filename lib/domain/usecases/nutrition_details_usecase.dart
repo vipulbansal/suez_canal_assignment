@@ -2,7 +2,7 @@ import 'package:suez_canal_assignment/core/params/ingredient_request_params.dart
 import 'package:suez_canal_assignment/domain/repositories/nutrition_details_repository.dart';
 
 import '../../core/resources/data_state.dart';
-import '../../core/use_case.dart';
+import '../../core/resources/use_case.dart';
 import '../../data/models/data_response_model.dart';
 
 class NutritionDetailsUsecase

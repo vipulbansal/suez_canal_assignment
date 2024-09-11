@@ -10,8 +10,8 @@ String nutritionDetailModelToJson(NutritionDetailModel data) => json.encode(data
 
 class NutritionDetailModel {
   String? uri;
-  int? nutritionDetailModelYield;
-  int? calories;
+  num? nutritionDetailModelYield;
+  num? calories;
   double? totalWeight;
   List<String>? dietLabels;
   List<String>? healthLabels;
@@ -115,7 +115,7 @@ class Ingredient {
 }
 
 class Parsed {
-  int? quantity;
+  num? quantity;
   String? measure;
   String? foodMatch;
   String? food;

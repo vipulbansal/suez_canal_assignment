@@ -20,12 +20,17 @@ class NutritionDetailsRepositoryImplementation
     try {
       final httpResponse = await _nutritionApiService.getNutritionDetails(
           ingredientRequestParams: params);
+      if(httpResponse==null){
+        return DataFailed(HttpException(
+            "Wrong Data Entered"
+        ));
+      }
       if (httpResponse.runtimeType == http.Response) {
         return DataSuccess(DataResponseModel.fromJson(
             json.decode((httpResponse as http.Response).body)));
       } else {
         return DataFailed(HttpException(
-            httpResponse.response.toString(),
+            httpResponse.response()
         ));
       }
     } on HttpException catch (e) {
