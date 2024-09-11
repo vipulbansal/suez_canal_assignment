@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:suez_canal_assignment/core/params/ingredient_request_params.dart';
 
 import '../../../core/network/request_helper.dart';
-import '../../models/data_response_model.dart';
 
 class NutritionApiService {
   final String apiId = dotenv.env['API_ID']!;

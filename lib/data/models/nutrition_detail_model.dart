@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final nutritionDetailModel = nutritionDetailModelFromJson(jsonString);
-
 import 'dart:convert';
 
 NutritionDetailModel nutritionDetailModelFromJson(String str) => NutritionDetailModel.fromJson(json.decode(str));
@@ -59,30 +55,30 @@ class NutritionDetailModel {
       );
 
   factory NutritionDetailModel.fromJson(Map<String, dynamic> json) => NutritionDetailModel(
-    uri: json["uri"],
-    nutritionDetailModelYield: json["yield"],
-    calories: json["calories"],
-    totalWeight: json["totalWeight"]?.toDouble(),
-    dietLabels: json["dietLabels"] == null ? [] : List<String>.from(json["dietLabels"]!.map((x) => x)),
-    healthLabels: json["healthLabels"] == null ? [] : List<String>.from(json["healthLabels"]!.map((x) => x)),
-    cautions: json["cautions"] == null ? [] : List<dynamic>.from(json["cautions"]!.map((x) => x)),
-    totalNutrients: Map.from(json["totalNutrients"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
-    totalDaily: Map.from(json["totalDaily"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
-    ingredients: json["ingredients"] == null ? [] : List<Ingredient>.from(json["ingredients"]!.map((x) => Ingredient.fromJson(x))),
-  );
+        uri: json["uri"],
+        nutritionDetailModelYield: json["yield"],
+        calories: json["calories"],
+        totalWeight: json["totalWeight"]?.toDouble(),
+        dietLabels: json["dietLabels"] == null ? [] : List<String>.from(json["dietLabels"]!.map((x) => x)),
+        healthLabels: json["healthLabels"] == null ? [] : List<String>.from(json["healthLabels"]!.map((x) => x)),
+        cautions: json["cautions"] == null ? [] : List<dynamic>.from(json["cautions"]!.map((x) => x)),
+        totalNutrients: Map.from(json["totalNutrients"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
+        totalDaily: Map.from(json["totalDaily"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
+        ingredients: json["ingredients"] == null ? [] : List<Ingredient>.from(json["ingredients"]!.map((x) => Ingredient.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "uri": uri,
-    "yield": nutritionDetailModelYield,
-    "calories": calories,
-    "totalWeight": totalWeight,
-    "dietLabels": dietLabels == null ? [] : List<dynamic>.from(dietLabels!.map((x) => x)),
-    "healthLabels": healthLabels == null ? [] : List<dynamic>.from(healthLabels!.map((x) => x)),
-    "cautions": cautions == null ? [] : List<dynamic>.from(cautions!.map((x) => x)),
-    "totalNutrients": Map.from(totalNutrients!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-    "totalDaily": Map.from(totalDaily!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-    "ingredients": ingredients == null ? [] : List<dynamic>.from(ingredients!.map((x) => x.toJson())),
-  };
+        "uri": uri,
+        "yield": nutritionDetailModelYield,
+        "calories": calories,
+        "totalWeight": totalWeight,
+        "dietLabels": dietLabels == null ? [] : List<dynamic>.from(dietLabels!.map((x) => x)),
+        "healthLabels": healthLabels == null ? [] : List<dynamic>.from(healthLabels!.map((x) => x)),
+        "cautions": cautions == null ? [] : List<dynamic>.from(cautions!.map((x) => x)),
+        "totalNutrients": Map.from(totalNutrients!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "totalDaily": Map.from(totalDaily!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "ingredients": ingredients == null ? [] : List<dynamic>.from(ingredients!.map((x) => x.toJson())),
+      };
 }
 
 class Ingredient {
@@ -104,14 +100,14 @@ class Ingredient {
       );
 
   factory Ingredient.fromJson(Map<String, dynamic> json) => Ingredient(
-    text: json["text"],
-    parsed: json["parsed"] == null ? [] : List<Parsed>.from(json["parsed"]!.map((x) => Parsed.fromJson(x))),
-  );
+        text: json["text"],
+        parsed: json["parsed"] == null ? [] : List<Parsed>.from(json["parsed"]!.map((x) => Parsed.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "text": text,
-    "parsed": parsed == null ? [] : List<dynamic>.from(parsed!.map((x) => x.toJson())),
-  };
+        "text": text,
+        "parsed": parsed == null ? [] : List<dynamic>.from(parsed!.map((x) => x.toJson())),
+      };
 }
 
 class Parsed {
@@ -165,30 +161,30 @@ class Parsed {
       );
 
   factory Parsed.fromJson(Map<String, dynamic> json) => Parsed(
-    quantity: json["quantity"],
-    measure: json["measure"],
-    foodMatch: json["foodMatch"],
-    food: json["food"],
-    foodId: json["foodId"],
-    weight: json["weight"]?.toDouble(),
-    retainedWeight: json["retainedWeight"]?.toDouble(),
-    nutrients: Map.from(json["nutrients"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
-    measureUri: json["measureURI"],
-    status: json["status"],
-  );
+        quantity: json["quantity"],
+        measure: json["measure"],
+        foodMatch: json["foodMatch"],
+        food: json["food"],
+        foodId: json["foodId"],
+        weight: json["weight"]?.toDouble(),
+        retainedWeight: json["retainedWeight"]?.toDouble(),
+        nutrients: Map.from(json["nutrients"]!).map((k, v) => MapEntry<String, TotalDaily>(k, TotalDaily.fromJson(v))),
+        measureUri: json["measureURI"],
+        status: json["status"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "quantity": quantity,
-    "measure": measure,
-    "foodMatch": foodMatch,
-    "food": food,
-    "foodId": foodId,
-    "weight": weight,
-    "retainedWeight": retainedWeight,
-    "nutrients": Map.from(nutrients!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-    "measureURI": measureUri,
-    "status": status,
-  };
+        "quantity": quantity,
+        "measure": measure,
+        "foodMatch": foodMatch,
+        "food": food,
+        "foodId": foodId,
+        "weight": weight,
+        "retainedWeight": retainedWeight,
+        "nutrients": Map.from(nutrients!).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "measureURI": measureUri,
+        "status": status,
+      };
 }
 
 class TotalDaily {
@@ -214,14 +210,14 @@ class TotalDaily {
       );
 
   factory TotalDaily.fromJson(Map<String, dynamic> json) => TotalDaily(
-    label: json["label"],
-    quantity: json["quantity"]?.toDouble(),
-    unit: json["unit"],
-  );
+        label: json["label"],
+        quantity: json["quantity"]?.toDouble(),
+        unit: json["unit"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "label": label,
-    "quantity": quantity,
-    "unit": unit,
-  };
+        "label": label,
+        "quantity": quantity,
+        "unit": unit,
+      };
 }

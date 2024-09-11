@@ -22,13 +22,10 @@ void main() {
   blocTest<NutritionAnalysisBloc, NutritionAnalysisState>(
     'emits [NutritionAnalysisLoading, NutritionAnalysisSuccess] when AnalyzeIngredientsEvent succeeds',
     build: () {
-      when(mockNutritionDetailsUsecase.call(params: anyNamed('params')))
-          .thenAnswer((_) async => DataSuccess<DataResponseModel>(
-          DataResponseModel(data: {'nutrition': 'success'})));
+      when(mockNutritionDetailsUsecase.call(params: anyNamed('params'))).thenAnswer((_) async => DataSuccess<DataResponseModel>(DataResponseModel(data: {'nutrition': 'success'})));
       return nutritionAnalysisBloc;
     },
-    act: (bloc) => bloc.add(AnalyzeIngredientsEvent(
-        ingredientRequestParams: IngredientRequestParams(ingr: ['1 apple']))),
+    act: (bloc) => bloc.add(AnalyzeIngredientsEvent(ingredientRequestParams: IngredientRequestParams(ingr: ['1 apple']))),
     expect: () => [
       isA<NutritionAnalysisLoading>(),
       isA<NutritionAnalysisSuccess>(),
@@ -38,12 +35,10 @@ void main() {
   blocTest<NutritionAnalysisBloc, NutritionAnalysisState>(
     'emits [NutritionAnalysisLoading, NutritionAnalysisFail] when AnalyzeIngredientsEvent fails',
     build: () {
-      when(mockNutritionDetailsUsecase.call(params: anyNamed('params')))
-          .thenAnswer((_) async => DataFailed(HttpException("Failed")));
+      when(mockNutritionDetailsUsecase.call(params: anyNamed('params'))).thenAnswer((_) async => DataFailed(HttpException("Failed")));
       return nutritionAnalysisBloc;
     },
-    act: (bloc) => bloc.add(AnalyzeIngredientsEvent(
-        ingredientRequestParams: IngredientRequestParams(ingr: ['1 apple']))),
+    act: (bloc) => bloc.add(AnalyzeIngredientsEvent(ingredientRequestParams: IngredientRequestParams(ingr: ['1 apple']))),
     expect: () => [
       isA<NutritionAnalysisLoading>(),
       isA<NutritionAnalysisFail>(),

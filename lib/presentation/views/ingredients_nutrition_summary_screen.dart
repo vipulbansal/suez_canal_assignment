@@ -9,21 +9,12 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final nutritionDetail =
-    ModalRoute.of(context)!.settings.arguments as NutritionDetailModel;
+    final nutritionDetail = ModalRoute.of(context)!.settings.arguments as NutritionDetailModel;
 
-    final List<Parsed> parsedIngredients = nutritionDetail.ingredients
-        ?.expand((ingredient) => (ingredient.parsed ?? []).map((e) => e))
-        .toList() ??
-        [];
+    final List<Parsed> parsedIngredients = nutritionDetail.ingredients?.expand((ingredient) => (ingredient.parsed ?? []).map((e) => e)).toList() ?? [];
 
-    final totalCalories = parsedIngredients.fold(
-        0,
-            (sum, item) =>
-        sum + (item.nutrients?['ENERC_KCAL']?.quantity ?? 0).toInt());
-    final totalWeight =
-    parsedIngredients.fold(0.0, (sum, item) => sum + (item.weight ?? 0.0));
-
+    final totalCalories = parsedIngredients.fold(0, (sum, item) => sum + (item.nutrients?['ENERC_KCAL']?.quantity ?? 0).toInt());
+    final totalWeight = parsedIngredients.fold(0.0, (sum, item) => sum + (item.weight ?? 0.0));
 
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
@@ -33,8 +24,7 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: isPortrait ? buildPortraitLayout(context, parsedIngredients, totalCalories, totalWeight)
-            : buildLandscapeLayout(context, parsedIngredients, totalCalories, totalWeight),
+        child: isPortrait ? buildPortraitLayout(context, parsedIngredients, totalCalories, totalWeight) : buildLandscapeLayout(context, parsedIngredients, totalCalories, totalWeight),
       ),
     );
   }
@@ -42,15 +32,13 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
   Widget buildPortraitLayout(BuildContext context, List<Parsed> parsedIngredients, int totalCalories, double totalWeight) {
     return Column(
       children: [
-
         Expanded(
           child: ListView.builder(
             itemCount: parsedIngredients.length,
             itemBuilder: (context, index) {
               final ingredient = parsedIngredients[index];
               return GestureDetector(
-                onTap: () => context.pushNamed(totalNutritionAnalysisScreen,
-                    arguments: ingredient),
+                onTap: () => context.pushNamed(totalNutritionAnalysisScreen, arguments: ingredient),
                 child: Card(
                   margin: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Padding(
@@ -60,17 +48,14 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
                       children: [
                         Text(
                           ingredient.food ?? 'Unknown Food',
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                'Quantity: ${ingredient.quantity ?? 0} ${ingredient.measure ?? 'unit'}'),
-                            Text(
-                                'Calories: ${ingredient.nutrients?['ENERC_KCAL']?.quantity?.toInt() ?? 0} kcal'),
+                            Text('Quantity: ${ingredient.quantity ?? 0} ${ingredient.measure ?? 'unit'}'),
+                            Text('Calories: ${ingredient.nutrients?['ENERC_KCAL']?.quantity?.toInt() ?? 0} kcal'),
                           ],
                         ),
                         const SizedBox(height: 4),
@@ -98,8 +83,7 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Total Nutrition'),
-                  content: Text(
-                      'Total Calories: $totalCalories kcal\nTotal Weight: ${totalWeight.toStringAsFixed(2)} g'),
+                  content: Text('Total Calories: $totalCalories kcal\nTotal Weight: ${totalWeight.toStringAsFixed(2)} g'),
                   actions: [
                     TextButton(
                       onPressed: () {
@@ -127,8 +111,7 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final ingredient = parsedIngredients[index];
               return GestureDetector(
-                onTap: () => context.pushNamed(totalNutritionAnalysisScreen,
-                    arguments: ingredient),
+                onTap: () => context.pushNamed(totalNutritionAnalysisScreen, arguments: ingredient),
                 child: Card(
                   margin: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Padding(
@@ -138,17 +121,14 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
                       children: [
                         Text(
                           ingredient.food ?? 'Unknown Food',
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                                'Quantity: ${ingredient.quantity ?? 0} ${ingredient.measure ?? 'unit'}'),
-                            Text(
-                                'Calories: ${ingredient.nutrients?['ENERC_KCAL']?.quantity?.toInt() ?? 0} kcal'),
+                            Text('Quantity: ${ingredient.quantity ?? 0} ${ingredient.measure ?? 'unit'}'),
+                            Text('Calories: ${ingredient.nutrients?['ENERC_KCAL']?.quantity?.toInt() ?? 0} kcal'),
                           ],
                         ),
                         const SizedBox(height: 4),
@@ -176,8 +156,7 @@ class IngredientsNutritionSummaryScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Total Nutrition'),
-                  content: Text(
-                      'Total Calories: $totalCalories kcal\nTotal Weight: ${totalWeight.toStringAsFixed(2)} g'),
+                  content: Text('Total Calories: $totalCalories kcal\nTotal Weight: ${totalWeight.toStringAsFixed(2)} g'),
                   actions: [
                     TextButton(
                       onPressed: () {

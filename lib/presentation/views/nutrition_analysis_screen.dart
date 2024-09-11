@@ -13,8 +13,7 @@ class NutritionAnalysisScreen extends StatefulWidget {
   const NutritionAnalysisScreen({super.key});
 
   @override
-  State<NutritionAnalysisScreen> createState() =>
-      _NutritionAnalysisScreenState();
+  State<NutritionAnalysisScreen> createState() => _NutritionAnalysisScreenState();
 }
 
 class _NutritionAnalysisScreenState extends State<NutritionAnalysisScreen> {
@@ -50,87 +49,144 @@ class _NutritionAnalysisScreenState extends State<NutritionAnalysisScreen> {
       body: BlocConsumer<NutritionAnalysisBloc, NutritionAnalysisState>(
         listener: (context, state) {
           if (state is NutritionAnalysisSuccess) {
-            NutritionDetailModel nutritionDetailModel =
-            NutritionDetailModel.fromJson(
-                state.nutritionAnalysisData.data!);
-            context.pushNamed(ingredientsNutritionSummaryScreenRoute,
-                arguments: nutritionDetailModel);
+            NutritionDetailModel nutritionDetailModel = NutritionDetailModel.fromJson(state.nutritionAnalysisData.data!);
+            context.pushNamed(ingredientsNutritionSummaryScreenRoute, arguments: nutritionDetailModel);
           } else if (state is NutritionAnalysisFail) {
             SnackBarHelper.showSnackBar(state.message);
           }
         },
         builder: (context, state) {
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.only(bottom: bottomInset),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextField(
-                              controller: _ingredientController,
-                              maxLines: null, // Make it multi-line
-                              decoration: InputDecoration(
-                                hintText:
-                                "Enter ingredients line by line (e.g. 1 cup rice) and comma at the end of the line",
-                                border: OutlineInputBorder(),
-                              ),
-                              keyboardType: TextInputType.multiline,
-                              textInputAction: TextInputAction.newline,
-                            ),
-                            const SizedBox(height: 20),
-                          ],
+          return OrientationBuilder(
+            builder: (context, orientation) {
+              if (orientation == Orientation.portrait) {
+                return buildPortraitLayout(context, bottomInset, state);
+              } else {
+                return buildLandscapeLayout(context, state);
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildPortraitLayout(BuildContext context, double bottomInset, NutritionAnalysisState state) {
+    return Stack(
+      children: [
+        Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: bottomInset),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _ingredientController,
+                        maxLines: null,
+                        // Make it multi-line
+                        decoration: InputDecoration(
+                          hintText: "Enter ingredients line by line (e.g. 1 cup rice) and comma at the end of the line",
+                          border: OutlineInputBorder(),
                         ),
+                        keyboardType: TextInputType.multiline,
+                        textInputAction: TextInputAction.newline,
                       ),
-                    ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                      onPressed: _isAnalyzeButtonEnabled
-                          ? () async {
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ElevatedButton(
+                onPressed: _isAnalyzeButtonEnabled
+                    ? () async {
                         FocusScope.of(context).unfocus();
                         List<String> ingredients;
                         if (_ingredientController.text.contains(',')) {
-                          String cleanedText = _ingredientController.text
-                              .replaceAll('\n', '')
-                              .replaceAll('\r', '')
-                              .trim();
-                          ingredients = cleanedText
-                              .split(',')
-                              .map((ingredient) => ingredient.trim())
-                              .toList();
+                          String cleanedText = _ingredientController.text.replaceAll('\n', '').replaceAll('\r', '').trim();
+                          ingredients = cleanedText.split(',').map((ingredient) => ingredient.trim()).toList();
                         } else {
                           ingredients = [_ingredientController.text];
                         }
 
-                        nutritionAnalysisBloc.add(AnalyzeIngredientsEvent(
-                            ingredientRequestParams:
-                            IngredientRequestParams(
-                                ingr: ingredients)));
+                        nutritionAnalysisBloc.add(AnalyzeIngredientsEvent(ingredientRequestParams: IngredientRequestParams(ingr: ingredients)));
                       }
-                          : null,
-                      child: const Text("Analyze"),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              if (state is NutritionAnalysisLoading)
-                const LoadingWidget(
-                  message: "Fetching data...",
+                    : null,
+                child: const Text("Analyze"),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50),
                 ),
-            ],
-          );
-        },
-      ),
+              ),
+            ),
+          ],
+        ),
+        if (state is NutritionAnalysisLoading)
+          const LoadingWidget(
+            message: "Fetching data...",
+          ),
+      ],
+    );
+  }
+
+  Widget buildLandscapeLayout(BuildContext context, NutritionAnalysisState state) {
+    return Stack(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: _ingredientController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: "Enter ingredients line by line (e.g. 1 cup rice) and comma at the end of the line",
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: _isAnalyzeButtonEnabled
+                      ? () async {
+                          FocusScope.of(context).unfocus();
+                          List<String> ingredients;
+                          if (_ingredientController.text.contains(',')) {
+                            String cleanedText = _ingredientController.text.replaceAll('\n', '').replaceAll('\r', '').trim();
+                            ingredients = cleanedText.split(',').map((ingredient) => ingredient.trim()).toList();
+                          } else {
+                            ingredients = [_ingredientController.text];
+                          }
+
+                          nutritionAnalysisBloc.add(AnalyzeIngredientsEvent(ingredientRequestParams: IngredientRequestParams(ingr: ingredients)));
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: const Text("Analyze"),
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (state is NutritionAnalysisLoading)
+          const LoadingWidget(
+            message: "Fetching data...",
+          ),
+      ],
     );
   }
 }

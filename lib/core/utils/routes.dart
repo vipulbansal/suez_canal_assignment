@@ -1,3 +1,3 @@
 const rootRoute = '/';
 const ingredientsNutritionSummaryScreenRoute = '/ingredientsNutritionSummaryScreen';
-const totalNutritionAnalysisScreen='/totalNutritionAnalysisScreen';
+const totalNutritionAnalysisScreen = '/totalNutritionAnalysisScreen';

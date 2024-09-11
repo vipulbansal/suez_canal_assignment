@@ -8,7 +8,6 @@ class TotalNutritionAnalysisScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ingredient = ModalRoute.of(context)!.settings.arguments as Parsed;
 
-
     final calories = ingredient.nutrients?['ENERC_KCAL']?.quantity?.toInt() ?? 0;
     final fat = ingredient.nutrients?['FAT']?.quantity?.toDouble() ?? 0.0;
     final cholesterol = ingredient.nutrients?['CHOLE']?.quantity?.toDouble() ?? 0.0;
@@ -47,7 +46,6 @@ class TotalNutritionAnalysisScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildNutritionRow(String label, String value, String unit) {
     return Padding(

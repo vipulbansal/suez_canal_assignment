@@ -20,7 +20,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -38,8 +37,8 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         routes: {
-          ingredientsNutritionSummaryScreenRoute:(context)=>const IngredientsNutritionSummaryScreen(),
-          totalNutritionAnalysisScreen:(context)=>const TotalNutritionAnalysisScreen(),
+          ingredientsNutritionSummaryScreenRoute: (context) => const IngredientsNutritionSummaryScreen(),
+          totalNutritionAnalysisScreen: (context) => const TotalNutritionAnalysisScreen(),
         },
         home: const NutritionAnalysisScreen(),
       ),

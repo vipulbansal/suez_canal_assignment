@@ -5,18 +5,15 @@ import '../../core/resources/data_state.dart';
 import '../../core/resources/use_case.dart';
 import '../../data/models/data_response_model.dart';
 
-class NutritionDetailsUsecase
-    implements
-        UseCase<DataState<DataResponseModel>, IngredientRequestParams> {
+class NutritionDetailsUsecase implements UseCase<DataState<DataResponseModel>, IngredientRequestParams> {
   final NutritionDetailsRepository _nutritionDetailsRepository;
 
   NutritionDetailsUsecase(
-      this._nutritionDetailsRepository,
-      );
+    this._nutritionDetailsRepository,
+  );
 
   @override
-  Future<DataState<DataResponseModel>> call(
-      {IngredientRequestParams? params}) {
+  Future<DataState<DataResponseModel>> call({IngredientRequestParams? params}) {
     return _nutritionDetailsRepository.getNutritionDetails(params!);
   }
 }

@@ -124,9 +124,7 @@ class RequestHelper {
   static dynamic handleResponse(http.Response response) {
     if (response.statusCode == 200) {
       return response;
-    } else if (response.statusCode == 400 ||
-        response.statusCode == 409 ||
-        response.statusCode == 422) {
+    } else if (response.statusCode == 400 || response.statusCode == 409 || response.statusCode == 422) {
       final parsed = json.decode(response.body);
       if (parsed["message"] != null) return parsed["message"];
     }

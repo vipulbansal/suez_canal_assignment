@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final ingredientRequestParams = ingredientRequestParamsFromJson(jsonString);
-
 import 'dart:convert';
 
 IngredientRequestParams ingredientRequestParamsFromJson(String str) => IngredientRequestParams.fromJson(json.decode(str));
@@ -23,10 +19,10 @@ class IngredientRequestParams {
       );
 
   factory IngredientRequestParams.fromJson(Map<String, dynamic> json) => IngredientRequestParams(
-    ingr: List<String>.from(json["ingr"].map((x) => x)),
-  );
+        ingr: List<String>.from(json["ingr"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "ingr": List<dynamic>.from(ingr.map((x) => x)),
-  };
+        "ingr": List<dynamic>.from(ingr.map((x) => x)),
+      };
 }

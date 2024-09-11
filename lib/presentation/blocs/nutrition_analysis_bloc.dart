@@ -12,17 +12,14 @@ part 'nutrition_analysis_event.dart';
 
 part 'nutrition_analysis_state.dart';
 
-class NutritionAnalysisBloc
-    extends BlocWithState<NutritionAnalysisEvent, NutritionAnalysisState> {
+class NutritionAnalysisBloc extends BlocWithState<NutritionAnalysisEvent, NutritionAnalysisState> {
   final NutritionDetailsUsecase _nutritionDetailsUsecase;
 
-  NutritionAnalysisBloc(this._nutritionDetailsUsecase)
-      : super(NutritionAnalysisInitial()) {
+  NutritionAnalysisBloc(this._nutritionDetailsUsecase) : super(NutritionAnalysisInitial()) {
     on<AnalyzeIngredientsEvent>(_onAnalyzeIngredients);
   }
 
-  Future<void> _onAnalyzeIngredients(AnalyzeIngredientsEvent event,
-      Emitter<NutritionAnalysisState> emit) async {
+  Future<void> _onAnalyzeIngredients(AnalyzeIngredientsEvent event, Emitter<NutritionAnalysisState> emit) async {
     await runBlocProcess(() async {
       emit(NutritionAnalysisLoading());
       final dataState = await _nutritionDetailsUsecase(
@@ -37,8 +34,7 @@ class NutritionAnalysisBloc
           emit(NutritionAnalysisFail(message: "No data found"));
         }
       } else if (dataState is DataFailed) {
-        emit(NutritionAnalysisFail(
-            message: dataState.error?.message ?? "Server Issue"));
+        emit(NutritionAnalysisFail(message: dataState.error?.message ?? "Server Issue"));
       }
     });
   }
